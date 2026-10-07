@@ -1,0 +1,285 @@
+/* Tribe of Abraham e-learning. The site's colours on black, as the other tools; src/theme.test.js holds
+   them to WCAG AA (text 4.5:1, the edges of controls 3:1). */
+:root {
+  --bg: #000000;
+  --surface: #15110b;      /* the card: a warm near-black */
+  --raised: #221b11;       /* an answer you've picked */
+  --panel: #0b0905;        /* the xAPI viewer */
+  --line: #3a3020;         /* decorative rules */
+  --edge: #8c7a55;         /* the edges of controls */
+  --paper: #f4efe6;
+  --cream: #e8e0d0;
+  --muted: #a89c88;
+  --brass: #b8923a;
+  --brass-light: #d4aa55;
+  --right: #8fc15c;
+  --wrong: #ec8a7e;
+  --focus: #ffffff;
+  --display: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --light: 'Oswald', 'Arial Narrow', sans-serif;
+  --serif: 'Sorts Mill Goudy', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; }
+body { background: var(--bg); color: var(--cream); font-family: var(--sans); line-height: 1.55; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--brass-light); }
+:focus-visible { outline: 0.15em solid var(--focus); outline-offset: 0.15em; }
+[tabindex='-1']:focus { outline: none; }   /* headings and feedback that focus is moved to */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* Everything is in em: sizer.js sets .page's font size from the room there is */
+.sizer { height: 100%; }
+/* The page is exactly the window (or frame); the quiz scrolls inside .main, between the top and the
+   footer, so a frame that can't scroll (scrolling="no") still shows all of it */
+.page { height: 100%; display: flex; flex-direction: column; max-width: 52em; margin: 0 auto; padding: 1em 1.4em; }
+
+/* The top, as the other Tribe of Abraham tools: the star, the name, and the app's in a light face */
+.top { display: flex; align-items: center; gap: 0.6em; margin-bottom: 1.2em; }
+.brand-star { height: 2.2em; width: auto; display: block; }
+.brand { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 0.7em; line-height: 1; }
+.brand-name { font-family: var(--display); font-size: 1.15em; letter-spacing: 0.02em; text-transform: uppercase; color: #fff; }
+.app-name { font-family: var(--light); font-weight: 300; font-size: 1.22em; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; }
+
+.main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0.2em; margin: -0.2em; }
+.card { background: var(--surface); border: 0.06em solid var(--line); border-radius: 0.6em; padding: 1.8em 2em 2em; }
+.eyebrow { font-size: 0.75em; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-light); margin-bottom: 0.4em; }
+/* Lining figures: the face's old-style ones make "10" read as "1o" */
+h1, h2, .learner legend { font-family: var(--serif); font-weight: 400; color: var(--paper); line-height: 1.2; font-variant-numeric: lining-nums; }
+h1 { font-size: 2em; }
+.lede { font-size: 1.1em; margin: 0.6em 0 1em; }
+
+/* Start */
+.facts { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5em 1.6em; margin-bottom: 1.6em; color: var(--muted); }
+.facts strong { color: var(--paper); font-weight: 500; }
+.learner { border: 0; margin-bottom: 1.4em; }
+.learner legend { font-family: var(--serif); font-size: 1.3em; color: var(--paper); margin-bottom: 0.3em; }
+.optional { font-family: var(--sans); font-size: 0.7em; color: var(--muted); }
+.hint { color: var(--muted); font-size: 0.92em; margin-bottom: 1em; max-width: 38em; }
+.field { display: flex; flex-direction: column; gap: 0.3em; margin-bottom: 0.9em; max-width: 26em; }
+.field label { font-weight: 500; color: var(--paper); }
+.field input {
+  background: var(--bg); border: 0.08em solid var(--edge); border-radius: 0.35em; padding: 0.55em 0.7em; color: var(--paper);
+}
+.field input[aria-invalid='true'] { border-color: var(--wrong); }
+.field-error { color: var(--wrong); margin: 0.3em 0 0.6em; }
+.who { margin-bottom: 1.4em; }
+.who strong { color: var(--paper); font-weight: 500; }
+
+/* Buttons: the main one filled in brass (black on it), the others outlined */
+.primary, .secondary {
+  font-family: var(--sans); font-weight: 500; font-size: 1.05em; letter-spacing: 0.04em;
+  padding: 0.7em 1.6em; border-radius: 0.35em; border: 0.08em solid var(--brass);
+}
+.primary { background: var(--brass); color: #000; }
+.primary:hover { background: var(--brass-light); border-color: var(--brass-light); }
+.secondary { background: transparent; color: var(--brass-light); margin-bottom: 1em; }
+.secondary:hover { background: var(--raised); }
+
+/* A question */
+.progress { display: flex; align-items: center; gap: 1em; margin-bottom: 1.2em; color: var(--muted); font-size: 0.9em; }
+.progress p { white-space: nowrap; }
+.progress-bar { flex: 1; height: 0.4em; background: var(--line); border-radius: 0.2em; overflow: hidden; }
+.progress-bar span { display: block; height: 100%; background: var(--brass); transition: width 0.3s; }
+.question .prompt { font-size: 1.8em; margin-bottom: 0.8em; }
+.choices { display: grid; gap: 0.6em; margin-bottom: 1.2em; }
+.choice {
+  display: flex; align-items: center; gap: 0.8em; padding: 0.8em 1em;
+  border: 0.08em solid var(--edge); border-radius: 0.45em; cursor: pointer; color: var(--paper);
+  transition: background 0.15s, border-color 0.15s;
+}
+.choice:hover { background: var(--raised); }
+.choice input { width: 1.2em; height: 1.2em; accent-color: var(--brass); flex-shrink: 0; }
+.choice:has(input:focus-visible) { outline: 0.15em solid var(--focus); outline-offset: 0.15em; }
+.choice.chosen { background: var(--raised); border-color: var(--brass-light); }
+.choice-text { flex: 1; }
+.choice-mark { font-weight: 500; font-size: 0.9em; white-space: nowrap; }
+.choice.right { border-color: var(--right); }
+.choice.right .choice-mark { color: var(--right); }
+.choice.wrong { border-color: var(--wrong); }
+.choice.wrong .choice-mark { color: var(--wrong); }
+.choices.is-locked .choice { cursor: default; }
+.choices.is-locked .choice:hover { background: transparent; }
+.choices.is-locked .choice.chosen:hover { background: var(--raised); }
+
+.feedback { border-left: 0.25em solid; padding: 0.4em 0 0.4em 1em; margin-bottom: 1.4em; }
+.feedback h2 { font-size: 1.4em; margin-bottom: 0.2em; }
+.feedback.is-right { border-color: var(--right); }
+.feedback.is-right h2 { color: var(--right); }
+.feedback.is-wrong { border-color: var(--wrong); }
+.feedback.is-wrong h2 { color: var(--wrong); }
+
+/* Results */
+.percent { color: var(--muted); }
+.verdict { font-size: 1.15em; font-weight: 500; margin: 0.4em 0 0.3em; }
+.verdict.is-right { color: var(--right); }
+.verdict.is-wrong { color: var(--wrong); }
+.saved { color: var(--muted); min-height: 1.55em; margin-bottom: 0.8em; }
+.review-title { font-size: 1.4em; margin: 0.6em 0 0.6em; }
+.review { list-style: none; display: grid; gap: 0.7em; margin-bottom: 1.6em; counter-reset: q; }
+.review li { border-left: 0.2em solid; padding-left: 0.9em; }
+.review li.is-right { border-color: var(--right); }
+.review li.is-wrong { border-color: var(--wrong); }
+.review-q { color: var(--paper); }
+.review-a { color: var(--muted); font-size: 0.95em; }
+.review li.is-right .review-mark { color: var(--right); font-weight: 500; }
+.review li.is-wrong .review-mark { color: var(--wrong); font-weight: 500; }
+.actions { margin-bottom: 1.6em; display: flex; flex-wrap: wrap; gap: 0.7em; }
+.actions .secondary { margin-bottom: 0; }
+/* Exit: in the footer while the quiz is open, quiet like the other tools there */
+.exit {
+  background: transparent; border: 0.08em solid var(--edge); border-radius: 0.35em; padding: 0.3em 0.9em; color: var(--brass-light);
+}
+.exit:hover { background: var(--raised); }
+.notice .lede { margin-bottom: 1.2em; }
+
+/* The xAPI viewer: a quiet button in the footer, and the dialog it opens */
+.foot-tools { display: flex; align-items: center; gap: 0.8em; }
+.xapi-open {
+  display: inline-flex; align-items: center; gap: 0.4em; min-height: 2em;
+  background: transparent; border: 0.08em solid transparent; border-radius: 0.35em; padding: 0.2em 0.5em;
+  color: var(--muted); font-size: 0.9em;
+}
+.xapi-open:hover { border-color: var(--edge); color: var(--cream); }
+.xapi-braces { font-family: Consolas, monospace; }
+.xapi-count {
+  font-size: 0.8em; font-variant-numeric: tabular-nums; min-width: 1.6em; text-align: center;
+  border: 0.08em solid var(--edge); border-radius: 1em; padding: 0 0.4em;
+}
+.xapi-dialog {
+  width: min(46em, 94vw); max-height: 84vh; margin: auto; padding: 1.2em 1.4em 1em;
+  background: var(--panel); color: var(--cream); border: 0.1em solid var(--brass); border-radius: 0.6em;
+  font-size: 0.9em; display: none; flex-direction: column;
+}
+.xapi-dialog[open] { display: flex; }
+.xapi-dialog::backdrop { background: rgba(0, 0, 0, 0.75); }
+.xapi-head-bar { display: flex; align-items: center; justify-content: space-between; gap: 1em; }
+.xapi-head-bar h2 { font-size: 1.4em; }
+.xapi-close {
+  background: transparent; border: 0.08em solid var(--edge); border-radius: 0.35em; padding: 0.25em 0.9em; color: var(--brass-light);
+}
+.xapi-close:hover { background: var(--raised); }
+.xapi-summary { color: var(--muted); margin: 0.3em 0 0.8em; }
+.xapi-list { overflow-y: auto; min-height: 6em; padding-right: 0.3em; }
+.xapi-empty { color: var(--muted); padding-bottom: 0.3em; }
+.xapi-entry { border-left: 0.2em solid var(--edge); padding: 0.3em 0 0.3em 0.8em; }
+.xapi-entry.is-stored { border-color: var(--right); }
+.xapi-entry.is-failed { border-color: var(--wrong); }
+.xapi-meta { display: flex; flex-wrap: wrap; gap: 0 0.8em; font-size: 0.9em; }
+.xapi-time { color: var(--muted); font-variant-numeric: tabular-nums; }
+.xapi-status { font-weight: 500; }
+.xapi-status.is-sending { color: var(--muted); }
+.xapi-status.is-stored { color: var(--right); }
+.xapi-status.is-failed, .xapi-error { color: var(--wrong); }
+.xapi-statement + .xapi-statement { margin-top: 0.4em; }
+.xapi-line { color: var(--cream); }
+.xapi-line q { color: var(--paper); }
+.xapi-verb { color: var(--brass-light); font-weight: 500; }
+.xapi-details { display: flex; flex-wrap: wrap; gap: 0.1em 1.3em; font-size: 0.92em; }
+.xapi-details div { display: flex; gap: 0.35em; }
+.xapi-details dt { color: var(--muted); }
+.xapi-details dt::after { content: ':'; }
+.xapi-details dd { color: var(--paper); }
+.xapi-details .is-right dd { color: var(--right); }
+.xapi-details .is-wrong dd { color: var(--wrong); }
+.xapi-json summary { cursor: pointer; color: var(--brass-light); font-size: 0.9em; width: fit-content; }
+.xapi-json pre {
+  margin-top: 0.4em; max-height: 16em; overflow: auto; background: var(--bg); border: 0.06em solid var(--line);
+  border-radius: 0.4em; padding: 0.8em; font-size: 0.85em; color: var(--cream); line-height: 1.45;
+}
+
+.record-error { color: var(--wrong); margin-top: 0.8em; min-height: 1.55em; }
+
+/* Footer */
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6em 1em; margin-top: 1.4em; font-size: 0.85em; color: var(--muted); }
+/* Auto-scale text: a switch. On and off differ three ways, not by colour alone: the knob's side,
+   the track's fill (brass when on, black when off) and the word beside it. */
+.scale-switch {
+  display: inline-flex; align-items: center; gap: 0.6em;
+  background: transparent; border: 0.08em solid var(--edge); border-radius: 2em;
+  padding: 0.35em 0.7em 0.35em 1em; color: var(--cream);
+}
+.scale-switch:hover { background: var(--raised); }
+.switch-track {
+  position: relative; width: 2.6em; height: 1.4em; flex-shrink: 0;
+  border-radius: 1em; background: var(--bg); border: 0.1em solid var(--edge);
+  transition: background 0.15s, border-color 0.15s;
+}
+.switch-knob {
+  position: absolute; top: 50%; left: 0.15em; width: 0.95em; height: 0.95em; border-radius: 50%;
+  background: var(--muted); transform: translateY(-50%); transition: left 0.15s, background 0.15s;
+}
+.switch-state { min-width: 1.7em; font-weight: 500; color: var(--muted); }
+.scale-switch[aria-checked='true'] { border-color: var(--brass); }
+.scale-switch[aria-checked='true'] .switch-track { background: var(--brass); border-color: var(--brass); }
+.scale-switch[aria-checked='true'] .switch-knob { left: calc(100% - 1.1em); background: #000; }
+.scale-switch[aria-checked='true'] .switch-state { color: var(--brass-light); }
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar span, .choice, .switch-track, .switch-knob { transition: none; }
+}
+
+/* Phones */
+@media (max-width: 36em) {
+  .page { padding: 0.8em; }
+  .card { padding: 1.2em; }
+  h1, .question .prompt { font-size: 1.5em; }
+}
+
+/* Landscape: a wide, short frame (a course's web window, a phone on its side). The same content in two
+   columns under a slim top bar, so it fits the height instead of running off the bottom. Only the
+   placement changes, never the order, so screen readers and the keyboard go through it as always.
+   App.jsx sizes it to a shorter design on the same test. */
+@media (min-aspect-ratio: 3/2) and (max-height: 600px) {
+  .page {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto 1fr;
+    grid-template-areas: 'top foot' 'main main'; column-gap: 1em;
+    max-width: 64em; padding: 0.6em 1.2em;
+  }
+  .top { grid-area: top; margin-bottom: 0.6em; }
+  .brand-star { height: 1.8em; }
+  .main { grid-area: main; min-height: 0; }
+  .foot { grid-area: foot; margin-top: 0; align-self: start; }
+  .foot > p { display: none; }   /* the copyright: no room for it here */
+  .card { padding: 1em 1.4em; }
+  h1 { font-size: 1.6em; }
+  .record-error { margin-top: 0.3em; min-height: 0; }
+
+  /* Start: what it is on the left, who's taking it on the right */
+  .start { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 2em; align-items: start; }
+  .lede { margin: 0.4em 0 0.8em; }
+  .facts { flex-direction: column; gap: 0.2em; margin-bottom: 0; }
+  .learner { margin-bottom: 0.8em; }
+  .learner legend { font-size: 1.15em; }
+  .hint { margin-bottom: 0.6em; }
+  .field { margin-bottom: 0.6em; }
+  .field input { padding: 0.4em 0.6em; }
+
+  /* A question: the question and its feedback on the left, the answers and the button on the right */
+  .question-form {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 1.6em;
+    grid-template-rows: auto auto 1fr auto auto;
+    grid-template-areas: 'progress progress' 'prompt choices' 'feedback choices' 'feedback nudge' 'feedback next';
+    align-items: start;
+  }
+  .progress { grid-area: progress; margin-bottom: 0.8em; }
+  .question .prompt { grid-area: prompt; font-size: 1.55em; margin-bottom: 0.6em; }
+  .choices { grid-area: choices; gap: 0.45em; margin-bottom: 0.7em; }
+  .choice { padding: 0.5em 0.8em; }
+  .nudge { grid-area: nudge; margin-top: 0; }
+  .feedback { grid-area: feedback; margin-bottom: 0; }
+  .feedback h2 { font-size: 1.25em; }
+  .next { grid-area: next; justify-self: start; padding: 0.55em 1.4em; }
+
+  /* Results: the score on the left, the answers on the right, scrolling in their own box */
+  .results { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: 2em; align-items: start; }
+  .results .actions { margin-bottom: 0; }
+  .review-title { margin: 0 0 0.4em; font-size: 1.25em; }
+  .review { max-height: calc(100vh - 9.5em); overflow-y: auto; margin-bottom: 0; padding-right: 0.4em; gap: 0.5em; }
+}

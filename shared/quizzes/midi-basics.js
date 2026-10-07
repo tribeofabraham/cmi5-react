@@ -1,0 +1,123 @@
+// MIDI basics: ten questions on what MIDI is and the messages a controller like the Tribe of Abraham
+// foot pedal sends. Each question has its answer and a short explanation, shown after answering.
+
+export default {
+  id: 'midi-basics',
+  title: 'MIDI Basics',
+  description: 'Ten questions on how MIDI carries a performance between instruments and computers.',
+  passingScore: 0.8,
+  questions: [
+    {
+      id: 'stands-for',
+      type: 'choice',
+      prompt: 'What does MIDI stand for?',
+      choices: [
+        { id: 'a', text: 'Musical Instrument Digital Interface' },
+        { id: 'b', text: 'Multiple Input Device Interconnect' },
+        { id: 'c', text: 'Music Industry Data Interchange' },
+        { id: 'd', text: 'Modular Instrument Digital Input' },
+      ],
+      answer: 'a',
+      explanation: 'MIDI is the Musical Instrument Digital Interface, a standard agreed by instrument makers in 1983 so their gear could talk to each other.',
+    },
+    {
+      id: 'carries-audio',
+      type: 'true-false',
+      prompt: 'A MIDI cable carries the sound of the instrument.',
+      answer: false,
+      explanation: 'MIDI carries instructions, not sound: which note, how hard, when to stop. The receiving instrument or software makes the sound.',
+    },
+    {
+      id: 'channels',
+      type: 'choice',
+      prompt: 'How many channels does one MIDI connection carry?',
+      choices: [
+        { id: 'a', text: '4' },
+        { id: 'b', text: '8' },
+        { id: 'c', text: '16' },
+        { id: 'd', text: '128' },
+      ],
+      answer: 'c',
+      explanation: 'Sixteen. Each message is tagged with a channel, so one cable can play sixteen different parts on sixteen different sounds.',
+    },
+    {
+      id: 'value-range',
+      type: 'choice',
+      prompt: 'Note numbers and velocities in MIDI 1.0 run from 0 to what?',
+      choices: [
+        { id: 'a', text: '100' },
+        { id: 'b', text: '127' },
+        { id: 'c', text: '255' },
+        { id: 'd', text: '1023' },
+      ],
+      answer: 'b',
+      explanation: '127. MIDI 1.0 data bytes have 7 bits for the value, which gives 128 steps, 0 to 127.',
+    },
+    {
+      id: 'middle-c',
+      type: 'choice',
+      prompt: 'Which MIDI note number is middle C?',
+      choices: [
+        { id: 'a', text: '48' },
+        { id: 'b', text: '60' },
+        { id: 'c', text: '64' },
+        { id: 'd', text: '72' },
+      ],
+      answer: 'b',
+      explanation: 'Note 60. Each step is a semitone, so 61 is C sharp, 72 is the C an octave up and 69 is the A at 440 Hz.',
+    },
+    {
+      id: 'velocity-zero',
+      type: 'true-false',
+      prompt: 'A Note On message with a velocity of 0 works as a Note Off.',
+      answer: true,
+      explanation: 'True. Many instruments end notes this way, because a stream of Note On messages can skip repeating the status byte (running status) and save time on the wire.',
+    },
+    {
+      id: 'sustain',
+      type: 'choice',
+      prompt: 'Control Change 64 is usually which control?',
+      choices: [
+        { id: 'a', text: 'Volume' },
+        { id: 'b', text: 'Modulation wheel' },
+        { id: 'c', text: 'Sustain pedal' },
+        { id: 'd', text: 'Pan' },
+      ],
+      answer: 'c',
+      explanation: 'CC 64 is the sustain (damper) pedal: 64 and above is down, below 64 is up. CC 1 is modulation, CC 7 volume and CC 10 pan.',
+    },
+    {
+      id: 'program-change',
+      type: 'choice',
+      prompt: 'What does a Program Change message do?',
+      choices: [
+        { id: 'a', text: 'Changes the tempo' },
+        { id: 'b', text: 'Selects a different sound or preset' },
+        { id: 'c', text: 'Transposes every note' },
+        { id: 'd', text: 'Starts a recording' },
+      ],
+      answer: 'b',
+      explanation: 'It picks a sound (a "program" or patch) on that channel. Foot controllers often send Program Changes to switch presets mid-song.',
+    },
+    {
+      id: 'drum-channel',
+      type: 'choice',
+      prompt: 'In General MIDI, which channel is kept for drums?',
+      choices: [
+        { id: 'a', text: 'Channel 1' },
+        { id: 'b', text: 'Channel 9' },
+        { id: 'c', text: 'Channel 10' },
+        { id: 'd', text: 'Channel 16' },
+      ],
+      answer: 'c',
+      explanation: 'Channel 10. On it, each note number is a different drum: 36 is a kick, 38 a snare, 42 a closed hi-hat.',
+    },
+    {
+      id: 'usb',
+      type: 'true-false',
+      prompt: 'MIDI only works over the round 5-pin DIN cable.',
+      answer: false,
+      explanation: 'False. The same messages travel over USB, Bluetooth, Wi-Fi and inside software. The 5-pin DIN cable was simply the first way.',
+    },
+  ],
+}
