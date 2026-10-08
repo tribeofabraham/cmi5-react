@@ -9,9 +9,11 @@
 //      works once and a reload must still work)
 //   2. reads the LMS.LaunchData state document: launchMode, masteryScore, moveOn, returnURL and the
 //      context template (with this session's id)
-//   3. reads its own progress for the registration (has it passed / completed before?) from a state
+//   3. reads the learner's preferences (the cmi5LearnerPreferences agent profile), as cmi5 requires
+//      before any statement
+//   4. reads its own progress for the registration (has it passed / completed before?) from a state
 //      document of its own, so it never sends those twice
-//   4. sends statements (shared/cmi5.js) and, when done, terminated, then goes back to returnURL.
+//   5. sends statements (shared/cmi5.js) and, when done, terminated, then goes back to returnURL.
 import { LAUNCH_DATA, SESSION_ID, XAPI_VERSION, statementsFor } from '../shared/cmi5.js'
 
 const PROGRESS = 'https://tribeofabraham.com/xapi/cmi5-react/state/progress'
@@ -77,7 +79,12 @@ export async function connect(quiz, launch) {
   // 2. The LMS's launch data
   const launchData = await lrs('GET', 'activities/state', { query: stateQuery(LAUNCH_DATA) })
   if (!launchData?.contextTemplate) throw new LmsError('Your learning system did not give this lesson its launch data.')
-  // 3. What this registration has already recorded
+  // 3. The learner's preferences (language, audio): cmi5 has the AU read them before it sends
+  //    anything, and strict LMSs (SCORM Cloud) refuse statements until it has. None set is a 404.
+  const preferences = (await lrs('GET', 'agents/profile', {
+    query: { profileId: 'cmi5LearnerPreferences', agent: JSON.stringify(launch.actor) },
+  })) ?? {}
+  // 4. What this registration has already recorded
   const progress = (await lrs('GET', 'activities/state', { query: stateQuery(PROGRESS) }).catch(() => null)) ?? {}
 
   const session = {
@@ -127,7 +134,11 @@ export async function connect(quiz, launch) {
   }
 
   return {
-    info: { ...session, alreadyPassed: !!progress.passed, alreadyCompleted: !!progress.completed, terminated: mine.terminated },
+    info: {
+      ...session,
+      alreadyPassed: !!progress.passed, alreadyCompleted: !!progress.completed, terminated: mine.terminated,
+      languagePreference: preferences.languagePreference ?? '', audioPreference: preferences.audioPreference ?? '',
+    },
 
     // answered / finished (finished turns into passed or failed, and completed, as the rules allow)
     async record(event) {
