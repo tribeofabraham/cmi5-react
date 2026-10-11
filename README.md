@@ -11,6 +11,18 @@ violations).
 Live at **https://learn.tribeofabraham.com/cmi5/**. It's only files: the quiz talks to the LMS
 itself, so there's no server of its own.
 
+## Two publishers
+
+The same quiz is published twice, as two separate cmi5 courses with their own permanent ids:
+
+| | Served from | Course and AU ids | Package |
+| --- | --- | --- | --- |
+| Tribe of Abraham (the default) | learn.tribeofabraham.com/cmi5/ | `https://tribeofabraham.com/xapi/cmi5-react/…` | `npm run package` |
+| Ragamuffin Studios | ragamuffinstudios.com/cmi5/ | `https://ragamuffinstudios.com/xapi/cmi5/…` | `npm run package:studios` |
+
+`VITE_BRAND=studios VITE_BRAND_NAME="Ragamuffin Studios"` builds the Studios copy (name, logo, footer
+link, ids: `src/brand.js`); the Studios site's deploy does this itself.
+
 ## Using it in an LMS (SCORM Cloud, …)
 
 1. `npm run package` makes `package/midi-basics-cmi5.zip` (just `cmi5.xml`: one course, one AU).

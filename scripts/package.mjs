@@ -9,8 +9,12 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { QUIZZES } from '../shared/quizzes/index.js'
 
-const BASE = process.env.CMI5_URL ?? 'https://learn.tribeofabraham.com/cmi5/'
-const IDS = 'https://tribeofabraham.com/xapi/cmi5-react'
+// CMI5_BRAND=studios (npm run package:studios): the Ragamuffin Studios course, served from
+// ragamuffinstudios.com/cmi5/, with its own ids (as in src/brand.js), into package/studios/.
+const STUDIOS = process.env.CMI5_BRAND === 'studios' || process.argv.includes('--studios')
+const BASE = process.env.CMI5_URL ?? (STUDIOS ? 'https://ragamuffinstudios.com/cmi5/' : 'https://learn.tribeofabraham.com/cmi5/')
+const IDS = STUDIOS ? 'https://ragamuffinstudios.com/xapi/cmi5' : 'https://tribeofabraham.com/xapi/cmi5-react'
+const OUT = STUDIOS ? 'package/studios' : 'package'
 
 const xml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 const text = (s) => `<langstring lang="en-US">${xml(s)}</langstring>`
@@ -73,8 +77,8 @@ function zip(files) {
 
 for (const quiz of Object.values(QUIZZES)) {
   const structure = courseStructure(quiz)
-  mkdirSync(`package/${quiz.id}`, { recursive: true })
-  writeFileSync(`package/${quiz.id}/cmi5.xml`, structure)
-  writeFileSync(`package/${quiz.id}-cmi5.zip`, zip({ 'cmi5.xml': structure }))
-  console.log(`package/${quiz.id}-cmi5.zip  (AU: ${BASE}?quiz=${quiz.id})`)
+  mkdirSync(`${OUT}/${quiz.id}`, { recursive: true })
+  writeFileSync(`${OUT}/${quiz.id}/cmi5.xml`, structure)
+  writeFileSync(`${OUT}/${quiz.id}-cmi5.zip`, zip({ 'cmi5.xml': structure }))
+  console.log(`${OUT}/${quiz.id}-cmi5.zip  (AU: ${BASE}?quiz=${quiz.id})`)
 }

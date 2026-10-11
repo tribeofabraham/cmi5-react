@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "node --test \"shared/**/*.test.js\" \"src/**/*.test.js\"",
     "package": "node scripts/package.mjs",
+    "package:studios": "node scripts/package.mjs --studios",
     "setup": "bash deploy/setup.sh",
     "deploy": "bash deploy/deploy.sh"
   },

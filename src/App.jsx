@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
-import logo from './assets/LogoOnly.svg'
+import { BRAND } from './brand.js'
 import { judge } from '../shared/cmi5.js'
 import { DEFAULT_QUIZ, QUIZZES } from '../shared/quizzes/index.js'
 import { connect, LmsError, readLaunch } from './lms.js'
@@ -123,11 +123,11 @@ export default function App() {
 
   return (
     <div className="sizer" ref={sizerRef}>
-      <div className="page" style={{ fontSize: `${scale}rem` }}>
+      <div className="page" data-brand={BRAND.id} style={{ fontSize: `${scale}rem` }}>
         <header className="top">
           {/* Decorative: the name beside it says who this is */}
-          <img src={logo} alt="" className="brand-star" width="864" height="864" />
-          <p className="brand"><span className="brand-name">Tribe of Abraham</span> <span className="app-name">E-Learning</span></p>
+          <img src={BRAND.logo} alt="" className="brand-star" width="864" height="864" />
+          <p className="brand"><span className="brand-name">{BRAND.name}</span> <span className="app-name">{BRAND.app}</span></p>
         </header>
 
         {/* The quiz scrolls here, between a fixed top and bottom, so it works in a window or frame of any size */}
@@ -171,7 +171,7 @@ export default function App() {
         </main>
 
         <footer className="foot">
-          <p>© {new Date().getFullYear()} <a href="https://tribeofabraham.com">Tribe of Abraham</a> · cmi5 e-learning</p>
+          <p>© {new Date().getFullYear()} <a href={BRAND.home}>{BRAND.name}</a> · cmi5 e-learning</p>
           <div className="foot-tools">
             {lms && showViewer && <XapiViewer log={log} mode="lms" />}
             {lms && (phase === 'start' || phase === 'question') && (

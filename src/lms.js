@@ -15,8 +15,9 @@
 //      document of its own, so it never sends those twice
 //   5. sends statements (shared/cmi5.js) and, when done, terminated, then goes back to returnURL.
 import { LAUNCH_DATA, SESSION_ID, XAPI_VERSION, statementsFor } from '../shared/cmi5.js'
+import { BRAND } from './brand.js'
 
-const PROGRESS = 'https://tribeofabraham.com/xapi/cmi5-react/state/progress'
+const PROGRESS = `${BRAND.ids}/state/progress`
 const PARAMS = ['endpoint', 'fetch', 'actor', 'registration', 'activityId']
 
 export class LmsError extends Error {}

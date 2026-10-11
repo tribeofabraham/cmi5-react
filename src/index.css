@@ -45,6 +45,8 @@ a { color: var(--brass-light); }
 .brand-star { height: 2.2em; width: auto; display: block; }
 .brand { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 0.7em; line-height: 1; }
 .brand-name { font-family: var(--display); font-size: 1.15em; letter-spacing: 0.02em; text-transform: uppercase; color: #fff; }
+/* The Studios copy: its name in the Studios serif, as on ragamuffinstudios.com */
+[data-brand='studios'] .brand-name { font-family: var(--serif); font-size: 1.35em; letter-spacing: 0; text-transform: none; }
 .app-name { font-family: var(--light); font-weight: 300; font-size: 1.22em; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; }
 
 .main { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0.2em; margin: -0.2em; }
